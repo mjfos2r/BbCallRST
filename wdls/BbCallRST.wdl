@@ -58,7 +58,7 @@ task CallRST {
         mem_gb:             32,
         disk_gb:            disk_size,
         boot_disk_gb:       25,
-        preemptible_tries:  0,
+        preemptible_tries:  3,
         max_retries:        0,
         docker:             "mjfos2r/rst_caller:latest"
     }
