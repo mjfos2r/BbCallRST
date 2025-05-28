@@ -39,6 +39,10 @@ task CallRST {
         rst_caller \
             -i "~{input_fa}" \
             -o "results"
+        cd results
+        mv *_AMPLICON.fna ~{sample_id}_AMPLICON.fna
+        mv *_RST_TYPE.txt ~{sample_id}_RST_TYPE.txt
+        mv *_FRAGMENT_LENGTHS.txt ~{sample_id}_FRAGMENT_LENGTHS.txt
     >>>
     output {
         String RST_type = read_string("results/~{sample_id}_RST_TYPE.txt")
