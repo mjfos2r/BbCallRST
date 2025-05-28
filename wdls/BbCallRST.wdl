@@ -18,7 +18,7 @@ workflow BbCallRST {
             input_fa = input_fa
     }
     output {
-        String RST_type = CallRST.RST_type 
+        String RST_type = CallRST.RST_type
         File RST_amplicon = CallRST.RST_amplicon
         File RST_fragments = CallRST.RST_fragments
     }
@@ -34,19 +34,22 @@ task CallRST {
         sample_id: "sample_id for the assembly we're classifying"
         input_fa: "draft assembly.fasta to be classified"
     }
+
     Int disk_size = 50 + 10 * ceil(size(input_fa, "GB"))
+
     command <<<
         rst_caller \
             -i "~{input_fa}" \
             -o "results"
-        cd results
-        mv *_AMPLICON.fna ~{sample_id}_AMPLICON.fna
-        mv *_RST_TYPE.txt ~{sample_id}_RST_TYPE.txt
-        mv *_FRAGMENT_LENGTHS.txt ~{sample_id}_FRAGMENT_LENGTHS.txt
+
+        mv results/*_AMPLICON.fna results/~{sample_id}_AMPLICON.fna
+        mv results/*_RST_TYPE.txt results/~{sample_id}_RST_TYPE.txt
+        mv results/*_FRAGMENT_LENGTHS.txt results/~{sample_id}_FRAGMENT_LENGTHS.txt
+
     >>>
     output {
         String RST_type = read_string("results/~{sample_id}_RST_TYPE.txt")
-        File RST_amplicon = "results/~{sample_id}_AMPLICON.fna" 
+        File RST_amplicon = "results/~{sample_id}_AMPLICON.fna"
         File RST_fragments = "results/~{sample_id}_FRAGMENT_LENGTHS.txt"
     }
     #########################
