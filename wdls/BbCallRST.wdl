@@ -24,7 +24,7 @@ workflow BbCallRST {
     }
 }
 
-task CallOspC {
+task CallRST {
     input {
         String sample_id
         File input_fa
